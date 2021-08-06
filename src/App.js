@@ -10,6 +10,8 @@ import Register from './components/Register/Register';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import './App.css';
 
+const appURL = 'https://pacific-crag-61191.herokuapp.com';
+
 const particlesOptions = {
   particles: {
     number: {
@@ -87,7 +89,7 @@ class App extends Component {
 
   onButtonSubmit = () => {
    this.setState({imageUrl: this.state.input});
-    fetch('http://localhost:3000/imageAPI', {
+    fetch(`${appURL}/imageAPI`, {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -97,7 +99,7 @@ class App extends Component {
       .then(response => response.json()) 
       .then(response => {
         if (response) {
-          fetch('http://localhost:3000/image', {
+          fetch(`${appURL}/image`, {
             method: 'put',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -144,8 +146,8 @@ class App extends Component {
             <FaceRecognition box={box} imageUrl={imageUrl}/>
           </div>
           : ( this.state.route !== 'register' ?
-              <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
-              : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+              <Signin appURL={appURL} loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
+              : <Register appURL={appURL} loadUser={this.loadUser} onRouteChange={this.onRouteChange}/>
             )        
         }
       </div>
