@@ -123,7 +123,7 @@ class App extends Component {
   }
 
   render() {
-    const { isSignedin, box, imageUrl, user } = this.state;
+    const { isSignedin, boxes, imageUrl, user } = this.state;
     return (
       <div className="App">
         <MouseParticles g={1} color="random" cull="col,image-wrapper"/>
