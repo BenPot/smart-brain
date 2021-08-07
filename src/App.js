@@ -59,9 +59,9 @@ class App extends Component {
   }
 
   calculateFaceLocation = (data) => {
-    let dataBoxes = [];
-    for (var i = 0; i > data.outputs.length; i++) {
-      const clarifaiFace = data.outputs[i].data.regions[i].region_info.bounding_box;
+    const dataBoxes = [];
+    for (var i = 0; i < data.outputs[0].data.regions.length; i++) {
+      const clarifaiFace = data.outputs[0].data.regions[i].region_info.bounding_box;
       const image = document.getElementById('inputImage');
       const width = Number(image.width);
       const height = Number(image.height);
@@ -70,10 +70,9 @@ class App extends Component {
         topRow: clarifaiFace.top_row * height,
         rightCol: width - (clarifaiFace.right_col * width),
         bottomRow: height - (clarifaiFace.bottom_row * height)
-      })
+      });
     }
     return dataBoxes;
-    
   }
 
   displayFaceBox = (boxes) => {
