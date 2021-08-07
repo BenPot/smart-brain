@@ -27,7 +27,7 @@ const particlesOptions = {
 const initialState = {
   input: '',
   imageUrl: '',
-  box: {},
+  boxes: [],
   route: 'signin',
   isSignedin: false,
   user: {
@@ -59,20 +59,25 @@ class App extends Component {
   }
 
   calculateFaceLocation = (data) => {
-    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
-    const image = document.getElementById('inputImage');
-    const width = Number(image.width);
-    const height = Number(image.height);
-    return {
-      leftCol: clarifaiFace.left_col * width,
-      topRow: clarifaiFace.top_row * height,
-      rightCol: width - (clarifaiFace.right_col * width),
-      bottomRow: height - (clarifaiFace.bottom_row * height)
+    let dataBoxes = [];
+    for (var i = 0; i > data.outputs.length; i++) {
+      const clarifaiFace = data.outputs[i].data.regions[i].region_info.bounding_box;
+      const image = document.getElementById('inputImage');
+      const width = Number(image.width);
+      const height = Number(image.height);
+      dataBoxes.push({
+        leftCol: clarifaiFace.left_col * width,
+        topRow: clarifaiFace.top_row * height,
+        rightCol: width - (clarifaiFace.right_col * width),
+        bottomRow: height - (clarifaiFace.bottom_row * height)
+      })
     }
+    return dataBoxes;
+    
   }
 
-  displayFaceBox = (box) => {
-    this.setState({box: box})
+  displayFaceBox = (boxes) => {
+    this.setState({boxes: boxes})
   }
 
   onInputChange = (event) => {
